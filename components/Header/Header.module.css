@@ -1,0 +1,138 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.sidebarToggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  transition: background-color 0.14s ease, color 0.14s ease;
+}
+
+.sidebarToggle:hover {
+  background: var(--color-bg-elevated-hover);
+  color: var(--color-text-primary);
+}
+
+.toggleIcon {
+  width: 17px;
+  height: 17px;
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+  letter-spacing: -0.01em;
+  color: var(--color-accent);
+  user-select: none;
+}
+
+.logoAccentChar {
+  color: var(--color-text-primary);
+  opacity: 0.35;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/*
+  Theme toggle: a single button styled as a track (this element) with
+  two icon children and a sliding thumb, all positioned via CSS only.
+  `.themeToggleDark` (applied from Header.tsx based on the isDark state)
+  is the ONLY thing that changes between light/dark — it slides the
+  thumb via `transform: translateX()` and swaps the active icon's color.
+  No JS ever sets a style directly; the class is the single source of
+  visual truth for the switch's position.
+*/
+.themeToggle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 52px;
+  height: 28px;
+  padding: 0 6px;
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-strong);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.themeIconSun,
+.themeIconMoon {
+  position: relative;
+  z-index: 1;
+  width: 13px;
+  height: 13px;
+  color: var(--color-text-muted);
+  transition: color 0.2s ease;
+}
+
+.themeToggleDark .themeIconMoon {
+  color: var(--color-accent-contrast);
+}
+
+.themeToggle:not(.themeToggleDark) .themeIconSun {
+  color: var(--color-accent-contrast);
+}
+
+.themeToggleThumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+  box-shadow: var(--shadow-elevated);
+  transition: transform 0.22s ease, background-color 0.2s ease;
+}
+
+.themeToggleDark .themeToggleThumb {
+  transform: translateX(24px);
+}
+
+.signUpButton {
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+  font-size: 0.82rem;
+  font-weight: 600;
+  transition: filter 0.14s ease, transform 0.14s ease;
+}
+
+.signUpButton:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 640px) {
+  .header {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .logo {
+    font-size: 1.15rem;
+  }
+}
