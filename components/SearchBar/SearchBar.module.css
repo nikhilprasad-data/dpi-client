@@ -1,0 +1,319 @@
+.wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+/* Signature element: a quiet ember of red breathing behind the bar.
+   Sits at z-index below the bar itself, purely atmospheric. */
+.glow {
+  position: absolute;
+  inset: -28px -10px;
+  background: radial-gradient(
+    ellipse at center,
+    var(--color-accent-soft-strong) 0%,
+    transparent 70%
+  );
+  filter: blur(22px);
+  opacity: 0.6;
+  animation: breathe 5s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.98);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.02);
+  }
+}
+
+.bar {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-3);
+  width: 100%;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  padding: var(--space-2) var(--space-3);
+  box-shadow: var(--shadow-elevated);
+  transition: border-color 0.16s ease;
+}
+
+.bar:focus-within {
+  border-color: var(--color-border-strong);
+}
+
+.toolsSlot {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.toolsBadge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border-strong);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  transition: background-color 0.14s ease, color 0.14s ease,
+    border-color 0.14s ease;
+}
+
+.toolsBadge:hover {
+  background: var(--color-bg-elevated-hover);
+  color: var(--color-text-primary);
+}
+
+.toolsBadgeActive {
+  background: var(--color-accent-soft);
+  border-color: transparent;
+  color: var(--color-accent);
+}
+
+.toolsIcon {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+}
+
+.toolsLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
+}
+
+.chevron {
+  width: 13px;
+  height: 13px;
+  transition: transform 0.16s ease;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+/*
+  Auto-grow textarea, CSS-only ("invisible twin" technique):
+  .growWrap and its ::after pseudo-element both occupy the same single
+  CSS Grid cell. ::after renders the live text (via `data-replicated-
+  value`, set from React state) invisibly, which sizes the grid row to
+  match the content; the textarea, stretching to fill that row by
+  default grid behavior, grows along with it. Capped at 4 lines via
+  max-height below, then scrolls — no JS-computed height, ever.
+*/
+.growWrap {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  max-height: 108px; /* ~4 lines at the shared font-size/line-height/padding below */
+  overflow-y: auto;
+}
+
+.growWrap::after {
+  content: attr(data-replicated-value) " ";
+  white-space: pre-wrap;
+  word-break: break-word;
+  visibility: hidden;
+}
+
+.growWrap > .input,
+.growWrap::after {
+  grid-area: 1 / 1 / 2 / 2;
+  font-family: inherit;
+  font-size: 0.98rem;
+  line-height: 1.4;
+  padding: 8px 0;
+  word-break: break-word;
+}
+
+.input {
+  width: 100%;
+  resize: none;
+  overflow: hidden;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--color-text-primary);
+}
+
+.input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.iconButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-pill);
+  color: var(--color-text-secondary);
+  transition: background-color 0.14s ease, color 0.14s ease;
+}
+
+.iconButton:hover {
+  background: var(--color-bg-elevated-hover);
+  color: var(--color-text-primary);
+}
+
+.actionIcon {
+  width: 18px;
+  height: 18px;
+}
+
+.micButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+  transition: filter 0.14s ease, transform 0.14s ease;
+}
+
+.micButton:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.micIcon {
+  width: 17px;
+  height: 17px;
+}
+
+.micButton:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.micButtonListening {
+  background: var(--color-accent-deep);
+  animation: pulseRing 1.4s ease-in-out infinite;
+}
+
+@keyframes pulseRing {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 var(--color-accent-soft-strong);
+  }
+  50% {
+    box-shadow: 0 0 0 8px transparent;
+  }
+}
+
+.sendButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+  transition: filter 0.14s ease, transform 0.14s ease;
+  animation: pop 0.16s ease-out;
+}
+
+.sendButton:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.sendIcon {
+  width: 17px;
+  height: 17px;
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.spinner {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 2px solid color-mix(in srgb, var(--color-accent-contrast) 35%, transparent);
+  border-top-color: var(--color-accent-contrast);
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.input:disabled {
+  opacity: 0.55;
+}
+
+.toolsBadge:disabled,
+.iconButton:disabled,
+.sendButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@media (max-width: 640px) {
+  .bar {
+    gap: var(--space-2);
+    padding: 6px 6px 6px 6px;
+  }
+
+  /*
+    Previously this hid BOTH the label text AND the chevron, and the
+    badge had no other glyph — leaving an empty, invisible button
+    (the reported "tool selector disappears" bug). Now only the text
+    label collapses; .toolsIcon (added above) has no mobile override,
+    so it — and the tappable badge itself — stay visible and usable.
+  */
+  .toolsLabel {
+    display: none;
+  }
+
+  .toolsBadge {
+    padding: 8px;
+  }
+
+  .chevron {
+    display: none;
+  }
+
+  .growWrap > .input,
+  .growWrap::after {
+    font-size: 0.9rem;
+  }
+}
